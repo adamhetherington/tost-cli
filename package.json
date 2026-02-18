@@ -1,6 +1,6 @@
 {
   "name": "tost-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Task Oriented Session Timer — a minimal focus timer for the terminal",
   "type": "module",
   "bin": {
