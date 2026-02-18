@@ -90,6 +90,10 @@ npm version patch
 npm publish --access public
 ```
 
+## Author
+
+Adam Hetherington
+
 ## License
 
 MIT
