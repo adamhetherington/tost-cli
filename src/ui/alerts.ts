@@ -10,12 +10,20 @@ export async function sendDesktopNotification(title: string, body: string): Prom
   const p = platform();
   try {
     if (p === 'darwin') {
+      // Banner notification
       await exec('osascript', [
         '-e',
         `display notification "${escapeAppleScript(body)}" with title "${escapeAppleScript(title)}"`,
       ]);
       // Play sound directly — bypasses notification settings that often mute alerts
       await exec('afplay', ['/System/Library/Sounds/Glass.aiff']);
+      // Modal fallback — banner often hidden by notification settings; modal always shows
+      const t = escapeAppleScript(title);
+      const b = escapeAppleScript(body);
+      await exec('osascript', [
+        '-e',
+        `tell application "System Events" to display dialog ("${t}" & return & return & "${b}") with title "tost" buttons {"OK"} default button "OK"`,
+      ]);
     } else if (p === 'win32') {
       const ps = `
         [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
