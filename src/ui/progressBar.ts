@@ -9,12 +9,16 @@ function getBarWidth(): number {
   return Math.max(10, Math.min(40, w));
 }
 
+const CYAN = '\x1b[36m';
+const DIM = '\x1b[90m';
+const RESET = '\x1b[0m';
+
 function buildBar(percent: number, width: number): string {
   const filled = Math.round((percent / 100) * width);
   const empty = width - filled;
   const block = '█';
   const space = '░';
-  return `[${block.repeat(filled)}${space.repeat(empty)}]`;
+  return `[${CYAN}${block.repeat(filled)}${DIM}${space.repeat(empty)}${RESET}]`;
 }
 
 export function renderProgressBar(
