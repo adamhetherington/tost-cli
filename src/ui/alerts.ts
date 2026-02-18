@@ -10,13 +10,12 @@ export async function sendDesktopNotification(title: string, body: string): Prom
   const p = platform();
   try {
     if (p === 'darwin') {
-      await exec(
-        'osascript',
-        [
-          '-e',
-          `display notification "${escapeAppleScript(body)}" with title "${escapeAppleScript(title)}"`,
-        ]
-      );
+      await exec('osascript', [
+        '-e',
+        `display notification "${escapeAppleScript(body)}" with title "${escapeAppleScript(title)}"`,
+      ]);
+      // Play sound directly — bypasses notification settings that often mute alerts
+      await exec('afplay', ['/System/Library/Sounds/Glass.aiff']);
     } else if (p === 'win32') {
       const ps = `
         [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
