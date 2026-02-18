@@ -49,7 +49,7 @@ async function runSession(
     !options.noNotify;
 
   return new Promise((resolve) => {
-    const tick = () => {
+    const tick = async () => {
       const elapsed = Date.now() - start;
       const remaining = Math.max(0, totalMs - elapsed);
       const percent = Math.min(100, (elapsed / totalMs) * 100);
@@ -61,7 +61,7 @@ async function runSession(
         }
         if (showBell) ringBell();
         if (showNotify) {
-          sendDesktopNotification(`${label} complete`, formatTime(totalMs));
+          await sendDesktopNotification(`${label} complete`, formatTime(totalMs));
         }
         resolve({ completed: true, elapsedMs: totalMs });
         return;
